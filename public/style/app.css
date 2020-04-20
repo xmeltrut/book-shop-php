@@ -52,15 +52,16 @@ body {
 }
 
 button {
-    background-color: #39CCCC;
+    background-color: #095996;
     border: 0;
+    color: #fff;
     cursor: pointer;
     font-size: 100%;
     padding: 12px 18px;
 }
 
 button:hover {
-    background-color: #3D9970;
+    background-color: #0E87E3;
 }
 
 .card-errors {
@@ -77,14 +78,14 @@ form.checkout {
 }
 
 form.checkout > div {
-    border: #39CCCC 1px solid;
+    border: #095996 1px solid;
     margin-right: 12px;
     padding: 12px;
     width: 60%;
 }
 
 form input[type="text"], form input[type="email"] {
-    border: #39CCCC 1px solid;
+    border: #095996 1px solid;
     font-size: 100%;
     padding: 11px;
     width: 300px;
@@ -98,7 +99,7 @@ form label {
 }
 
 header {
-    background-color: #39CCCC;
+    background-color: #095996;
     display: flex;
     justify-content: space-between;
     padding: 24px;
