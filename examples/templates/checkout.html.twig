@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Checkout</h1>
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+var stripe = Stripe('{{ stripe_public_key }}');
+
+stripe.redirectToCheckout({
+    sessionId: '{{ sessionId}}'
+});
+</script>
+{% endblock %}

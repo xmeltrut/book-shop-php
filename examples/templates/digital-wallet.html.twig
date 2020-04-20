@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Checkout</h1>
+
+<form method="post" id="payment-form">
+    <div id="payment-request-button"></div>
+</form>
+
+<div id="card-errors"></div>
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+var stripe = Stripe('{{ stripe_public_key }}');
+
+var paymentRequest = stripe.paymentRequest({
+    country: 'GB',
+    currency: 'gbp',
+    total: {
+        label: '{{ description }}',
+        amount: {{ totalPrice }}
+    },
+    requestPayerName: true,
+    requestPayerEmail: true
+});
+
+var elements = stripe.elements();
+var prButton = elements.create('paymentRequestButton', {
+  paymentRequest: paymentRequest,
+});
+
+paymentRequest.canMakePayment().then(function(result) {
+    if (result) {
+        prButton.mount('#payment-request-button');
+    } else {
+        document.getElementById('payment-request-button').innerHTML = 'Sorry, your browser does not support any digital wallets.';
+    }
+});
+
+paymentRequest.on('paymentmethod', function(ev) {
+    stripe.confirmCardPayment(
+        '{{ clientSecret }}',
+        {payment_method: ev.paymentMethod.id},
+        {handleActions: false}
+    ).then(function(confirmResult) {
+        if (confirmResult.error) {
+            ev.complete('fail');
+        } else {
+            ev.complete('success');
+
+            stripe.confirmCardPayment('{{ clientSecret }}').then(function(result) {
+                if (result.error) {
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    document.getElementById('payment-form').submit();
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock %}
