@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Basket</h1>
+
+{% if not basket is empty %}
+<div class="book-list">
+{% for book in basket %}
+    <div>
+        <img src="/images/{{ book.image }}" alt="Book cover">
+        <div>
+            <h2>{{ book.title }}</h2>
+            <p>{{ book.author }}</p>
+            <p>£{{ book.price }}</p>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+<p>Total price: £{{ totalPrice }}</p>
+
+<form method="post">
+    <button>Empty basket</button>
+</form>
+
+<form action="checkout" method="post">
+    <button>Checkout</button>
+</form>
+{% endif %}
+
+{% if basket is empty %}
+    <p>Your basket is currently empty.</p>
+{% endif %}
+
+{% endblock %}

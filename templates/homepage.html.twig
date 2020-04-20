@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Books</h1>
+
+<div class="book-list">
+{% for book in books %}
+    <div>
+        <img src="/images/{{ book.image }}" alt="Book cover">
+        <div>
+            <h2>{{ book.title }}</h2>
+            <p>{{ book.author }}, £{{ book.price }}</p>
+            <button onClick="addToBasket({{ book.id }});">Add to basket</button>
+        </div>
+    </div>
+{% endfor %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(event) {
+    updateBasket();
+});
+</script>
+{% endblock %}
