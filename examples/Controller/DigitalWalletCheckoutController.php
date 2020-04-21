@@ -35,9 +35,9 @@ class DigitalWalletCheckoutController extends AbstractController
         }
 
         $intent = PaymentIntent::create([
-          'amount' => $basket->getRawPrice(),
-          'currency' => 'gbp',
-          'description' => $basket->getDescription()
+            'amount' => $basket->getRawPrice(),
+            'currency' => 'gbp',
+            'description' => $basket->getDescription()
         ]);
 
         return $this->render('digital-wallet.html.twig', [
